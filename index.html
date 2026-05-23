@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tanaka Kambadza | Product Description Writer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink: #0e0e0e;
+      --cream: #f5f0e8;
+      --gold: #c8952a;
+      --gold-light: #e8b84b;
+      --muted: #6b6560;
+      --card-bg: #fffdf7;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* NOISE TEXTURE OVERLAY */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 5%;
+      background: rgba(245,240,232,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,149,42,0.2);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.5px;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover { color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 5% 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: 'TK';
+      position: absolute;
+      right: -2%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Playfair Display', serif;
+      font-size: 28vw;
+      font-weight: 900;
+      color: rgba(200,149,42,0.06);
+      pointer-events: none;
+      line-height: 1;
+    }
+
+    .hero-content { max-width: 700px; }
+
+    .hero-tag {
+      display: inline-block;
+      background: var(--gold);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 0.9rem 2rem;
+      border: none;
+      border-radius: 3px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover { background: var(--gold); transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+      padding: 0.9rem 2rem;
+      border: 1.5px solid var(--ink);
+      border-radius: 3px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    /* STATS BAR */
+    .stats-bar {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 2rem 5%;
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .stat { display: flex; flex-direction: column; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold-light);
+    }
+    .stat-label { font-size: 0.8rem; color: rgba(245,240,232,0.6); letter-spacing: 0.5px; }
+
+    /* SECTIONS */
+    section { padding: 6rem 5%; }
+
+    .section-tag {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 560px;
+      font-weight: 300;
+      margin-bottom: 3rem;
+    }
+
+    /* SERVICES */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(200,149,42,0.15);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--gold);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.3s;
+    }
+
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+    .service-card:hover::before { transform: scaleY(1); }
+
+    .service-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .service-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .service-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+
+    /* SAMPLES */
+    .samples-bg { background: #fff; }
+
+    .samples-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .sample-card {
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .sample-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+
+    .sample-header {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sample-product { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; }
+    .sample-category {
+      font-size: 0.65rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      background: rgba(200,149,42,0.2);
+      padding: 0.25rem 0.6rem;
+      border-radius: 2px;
+    }
+
+    .sample-body { padding: 1.5rem; background: var(--card-bg); }
+    .sample-body p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+    .sample-body p strong { color: var(--ink); }
+
+    /* PROCESS */
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      counter-reset: steps;
+    }
+
+    .process-step { position: relative; }
+
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: rgba(200,149,42,0.15);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .step-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+    /* PRICING */
+    .pricing-bg { background: var(--ink); color: var(--cream); }
+    .pricing-bg .section-title { color: var(--cream); }
+    .pricing-bg .section-sub { color: rgba(245,240,232,0.6); }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .pricing-card {
+      border: 1px solid rgba(245,240,232,0.1);
+      border-radius: 8px;
+      padding: 2rem;
+      position: relative;
+      transition: transform 0.2s;
+    }
+
+    .pricing-card:hover { transform: translateY(-4px); }
+
+    .pricing-card.featured {
+      border-color: var(--gold);
+      background: rgba(200,149,42,0.08);
+    }
+
+    .featured-badge {
+      position: absolute;
+      top: -12px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      border-radius: 2px;
+    }
+
+    .pricing-tier { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-light); margin-bottom: 0.8rem; }
+    .pricing-price { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .pricing-price span { font-size: 1rem; font-weight: 300; opacity: 0.6; }
+    .pricing-desc { font-size: 0.85rem; opacity: 0.6; margin-bottom: 1.5rem; line-height: 1.5; }
+
+    .pricing-features { list-style: none; margin-bottom: 2rem; }
+    .pricing-features li {
+      font-size: 0.88rem;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid rgba(245,240,232,0.07);
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .pricing-features li::before { content: '✦'; color: var(--gold); font-size: 0.6rem; }
+
+    .btn-pricing {
+      display: block;
+      text-align: center;
+      padding: 0.85rem;
+      border-radius: 3px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: 1.5px solid rgba(245,240,232,0.3);
+      color: var(--cream);
+    }
+    .btn-pricing:hover { border-color: var(--gold); color: var(--gold-light); }
+    .pricing-card.featured .btn-pricing { background: var(--gold); border-color: var(--gold); color: white; }
+    .pricing-card.featured .btn-pricing:hover { background: var(--gold-light); }
+
+    /* CONTACT */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .contact-info p { font-size: 1rem; color: var(--muted); line-height: 1.7; margin-bottom: 2rem; font-weight: 300; }
+
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-icon {
+      width: 40px; height: 40px;
+      background: var(--ink);
+      color: var(--gold-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .contact-text { font-size: 0.9rem; color: var(--muted); }
+    .contact-text strong { display: block; color: var(--ink); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.1rem; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label { font-size: 0.75rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: white;
+      border: 1.5px solid rgba(0,0,0,0.1);
+      border-radius: 4px;
+      padding: 0.8rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--ink);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: var(--gold); }
+
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    .btn-submit {
+      background: var(--ink);
+      color: var(--cream);
+      border: none;
+      padding: 1rem;
+      border-radius: 4px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 0.5rem;
+    }
+    .btn-submit:hover { background: var(--gold); }
+
+    /* FOOTER */
+    footer {
+      background: #080808;
+      color: rgba(245,240,232,0.5);
+      padding: 2rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--cream); }
+    .footer-logo span { color: var(--gold); }
+    footer p { font-size: 0.8rem; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .stats-bar { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Tanaka<span>.</span></div>
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#samples">Samples</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="btn-primary" style="padding:0.6rem 1.4rem;font-size:0.8rem;">Hire Me</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-tag">✦ Available for Projects</div>
+      <h1>Words That <em>Sell</em><br>Products.</h1>
+      <p class="hero-sub">Hi, I'm Tanaka Kambadza — a product description writer who crafts compelling copy that turns browsers into buyers. Every word earns its place.</p>
+      <div class="hero-btns">
+        <a href="#samples" class="btn-primary">View My Work</a>
+        <a href="#contact" class="btn-outline">Get a Quote</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Satisfaction Guaranteed</span></div>
+    <div class="stat"><span class="stat-num">24hr</span><span class="stat-label">Turnaround Available</span></div>
+    <div class="stat"><span class="stat-num">SEO</span><span class="stat-label">Optimized Copy</span></div>
+    <div class="stat"><span class="stat-num">∞</span><span class="stat-label">Revisions Until Perfect</span></div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="reveal">
+      <p class="section-tag">What I Do</p>
+      <h2 class="section-title">Services That Drive<br>Real Results</h2>
+      <p class="section-sub">From single products to full catalogues — I write copy that speaks to your customers and moves them to action.</p>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-icon">🛒</div>
+        <div class="service-title">Product Descriptions</div>
+        <p class="service-desc">Engaging, benefit-focused descriptions for eCommerce stores. Perfect for Shopify, Amazon, Etsy, and more.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔍</div>
+        <div class="service-title">SEO-Optimized Copy</div>
+        <p class="service-desc">Copy that ranks. I weave keywords naturally into descriptions that search engines and customers both love.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📦</div>
+        <div class="service-title">Bulk Catalogue Writing</div>
+        <p class="service-desc">Need 50+ descriptions? I handle large-volume projects with consistent quality and fast delivery.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✨</div>
+        <div class="service-title">Rewrite & Refresh</div>
+        <p class="service-desc">Existing descriptions not converting? I'll audit and rewrite them to boost engagement and sales.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAMPLES -->
+  <section id="samples" class="samples-bg">
+    <div class="reveal">
+      <p class="section-tag">Portfolio</p>
+      <h2 class="section-title">Sample Work</h2>
+      <p class="section-sub">Here's a taste of the kind of copy I write. Every description below is crafted to sell, not just describe.</p>
+    </div>
+    <div class="samples-grid reveal">
+
+      <div class="sample-card">
+        <div class="sample-header">
+          <span class="sample-product">Leather Minimalist Wallet</span>
+          <span class="sample-category">Fashion</span>
+        </div>
+        <div class="sample-body">
+          <p>Carry less. Live more. This <strong>full-grain leather slim wallet</strong> holds up to 8 cards and cash without the bulk. Hand-stitched edges, RFID blocking technology, and a profile so slim it disappears into your pocket. <strong>Built for the modern professional</strong> who values quality over clutter. Available in Midnight Black, Tan, and Cognac Brown.</p>
+        </div>
+      </div>
+
+      <div class="sample-card">
+        <div class="sample-header">
+          <span class="sample-product">Bamboo Standing Desk</span>
+          <span class="sample-category">Home Office</span>
+        </div>
+        <div class="sample-body">
+          <p>Your back deserves better. The <strong>ErgoRise Bamboo Standing Desk</strong> transitions from sitting to standing in under 3 seconds — no tools, no effort. Crafted from sustainably sourced bamboo, it's as good for the planet as it is for your posture. <strong>Wide enough for dual monitors</strong>, cable management built in. Work smarter, not sorer.</p>
+        </div>
+      </div>
+
+      <div class="sample-card">
+        <div class="sample-header">
+          <span class="sample-product">Vitamin C Serum</span>
+          <span class="sample-category">Skincare</span>
+        </div>
+        <div class="sample-body">
+          <p>Wake up to <strong>visibly brighter skin</strong> in just 2 weeks. Our 20% Vitamin C Serum is stabilized with Vitamin E and Ferulic Acid for maximum absorption — no irritation, no oxidation. Lightweight, fast-absorbing formula fades dark spots, evens skin tone, and <strong>protects against daily pollution</strong>. Dermatologist-tested. Fragrance-free. Results-guaranteed.</p>
+        </div>
+      </div>
+
+      <div class="sample-card">
+        <div class="sample-header">
+          <span class="sample-product">Wireless Noise-Cancelling Headphones</span>
+          <span class="sample-category">Electronics</span>
+        </div>
+        <div class="sample-body">
+          <p>Block the world. Find your focus. With <strong>40-hour battery life</strong> and industry-leading active noise cancellation, these headphones were built for deep work, long flights, and everything in between. <strong>Premium 40mm drivers</strong> deliver rich, balanced audio with crisp highs and punchy bass. Foldable design. Carrying case included. Your soundtrack, uninterrupted.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section>
+    <div class="reveal">
+      <p class="section-tag">How It Works</p>
+      <h2 class="section-title">Simple Process,<br>Exceptional Results</h2>
+      <p class="section-sub">Getting great copy shouldn't be complicated. Here's how we work together.</p>
+    </div>
+    <div class="process-steps reveal">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-title">You Brief Me</div>
+        <p class="step-desc">Share your product details, target audience, tone, and any keywords. The more context, the better the copy.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-title">I Write & Research</div>
+        <p class="step-desc">I research your market and competitors, then craft descriptions tailored to your brand voice.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-title">You Review</div>
+        <p class="step-desc">You receive the first draft. Share feedback — as many revisions as needed until you're happy.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-title">Ready to Publish</div>
+        <p class="step-desc">Final, polished copy delivered in your preferred format. Ready to upload and start selling.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="pricing-bg">
+    <div class="reveal">
+      <p class="section-tag">Investment</p>
+      <h2 class="section-title">Transparent Pricing</h2>
+      <p class="section-sub">No hidden fees. No surprises. Just great copy at fair prices.</p>
+    </div>
+    <div class="pricing-grid reveal">
+      <div class="pricing-card">
+        <div class="pricing-tier">Basic</div>
+        <div class="pricing-price">$10 <span>/ product</span></div>
+        <p class="pricing-desc">Perfect for getting started or testing the waters.</p>
+        <ul class="pricing-features">
+          <li>1 product description</li>
+          <li>Up to 150 words</li>
+          <li>1 revision included</li>
+          <li>Delivered in 48 hours</li>
+        </ul>
+        <a href="#contact" class="btn-pricing">Get Started</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="featured-badge">Most Popular</div>
+        <div class="pricing-tier">Standard</div>
+        <div class="pricing-price">$25 <span>/ 3 products</span></div>
+        <p class="pricing-desc">Best value for small stores and new launches.</p>
+        <ul class="pricing-features">
+          <li>3 product descriptions</li>
+          <li>Up to 200 words each</li>
+          <li>SEO keywords included</li>
+          <li>3 revisions included</li>
+          <li>Delivered in 48 hours</li>
+        </ul>
+        <a href="#contact" class="btn-pricing">Get Started</a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-tier">Premium</div>
+        <div class="pricing-price">$60 <span>/ 10 products</span></div>
+        <p class="pricing-desc">For growing stores that need consistent, high-quality copy.</p>
+        <ul class="pricing-features">
+          <li>10 product descriptions</li>
+          <li>Up to 250 words each</li>
+          <li>Full SEO optimization</li>
+          <li>Unlimited revisions</li>
+          <li>Priority 24hr delivery</li>
+        </ul>
+        <a href="#contact" class="btn-pricing">Get Started</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <p class="section-tag">Get In Touch</p>
+        <h2 class="section-title">Let's Work<br>Together</h2>
+        <p>Ready to turn your products into sales machines? Fill in the form or reach out directly. I respond within 24 hours.</p>
+        <div class="contact-detail">
+          <div class="contact-icon">✉</div>
+          <div class="contact-text">
+            <strong>Email</strong>
+            tanakakambadza17@gmail.com
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">🌍</div>
+          <div class="contact-text">
+            <strong>Based In</strong>
+            Zimbabwe — Available Worldwide
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">⚡</div>
+          <div class="contact-text">
+            <strong>Response Time</strong>
+            Within 24 hours
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="contact-form">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="John Smith"/>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="john@example.com"/>
+          </div>
+          <div class="form-group">
+            <label>Service Needed</label>
+            <select>
+              <option>Product Descriptions</option>
+              <option>SEO Copy</option>
+              <option>Bulk Catalogue</option>
+              <option>Rewrite & Refresh</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Tell Me About Your Project</label>
+            <textarea placeholder="Describe your product, niche, target audience, and any specific requirements..."></textarea>
+          </div>
+          <button class="btn-submit" onclick="alert('Thanks! Tanaka will get back to you within 24 hours.')">Send Message ✦</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Tanaka<span>.</span></div>
+    <p>© 2026 Tanaka Kambadza. All rights reserved.</p>
+    <p>Product Description Writer · Zimbabwe</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.1 });
+    reveals.forEach(r => observer.observe(r));
+  </script>
+
+</body>
+</html>
